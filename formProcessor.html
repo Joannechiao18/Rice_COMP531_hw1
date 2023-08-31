@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="HW1">
+    <meta name="keywords" content="HTML, CSS, JavaScript">
+    <meta name="author" content="Joanne Wang">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Form Processor Page</title>
+
+    <!-- Main css -->
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="css/fonts/material-icon/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="css/hw1.css">
+</head>
+<body>
+
+    <div class="main">
+        <!--<form action="/action_page.php" method="get">-->
+        <h1>Your data</h1>
+        <div>
+             <table id="tableData" cellpadding="2">
+             </table>
+             <div>
+                <p>Hidden timestamp:</p>
+                <p id="currentTime"></p>
+             </div>
+           </div>
+        
+    </div>
+
+    <!-- JS -->
+    <!--<script src="Form_Processor.js"></script>-->
+</body>
+</html>
+
+<script type="text/javascript">
+    // Get the query parameters
+const query = new URLSearchParams(window.location.search);
+
+// Create a table
+const table = document.createElement("table");
+
+// Add the table header row
+const headerRow = document.createElement("tr");
+for(var i=0; i<2; i++){
+    const headerCell = document.createElement("th");
+
+    if(i==0){
+        headerCell.textContent = "Key";
+    }
+    else{
+        headerCell.textContent = "Value";
+    }
+        
+    headerRow.appendChild(headerCell);
+}
+
+table.appendChild(headerRow);
+
+
+//Add [key, value]
+table.border = '2';
+var tableBody = document.createElement('TBODY');
+table.appendChild(tableBody);
+  
+for (var [key, value] of query.entries()) {
+    if(key=="currentTime"){
+        /*var d = new Date(key);
+        Set the value of the "time" field
+        var hours = d.getHours();
+        var mins=d.getMinutes();
+        var seconds=d.getSeconds();
+        var milliseconds=d.getMilliseconds();
+        //document.getElementById("time").value = hours + ":" + mins + ":" + seconds;*/
+        document.getElementById("currentTime").innerHTML = value;
+    }
+    else{
+        if(key=="pass" || key=="rePass"){
+            var s="*".repeat(value.length);
+            value=s;
+        }
+        var rowCount = table.rows.length;
+        var row = table.insertRow(rowCount);
+        row.insertCell(0).innerHTML= key;
+        row.insertCell(1).innerHTML= value;
+    }
+}
+
+
+/* Add the table data rows
+for (const [key, value] of query.entries()) {
+  const dataRow = document.createElement("tr");
+  const dataCell = document.createElement("td");
+  dataCell.textContent = key;
+  dataRow.appendChild(dataCell);
+  table.appendChild(dataRow);
+}
+
+// Add the table data rows
+for (const [key, value] of query.entries()) {
+    const dataRow = document.createElement("tr");
+    const dataCell = document.createElement("td");
+    dataCell.textContent = value;
+    dataRow.appendChild(dataCell);
+    table.appendChild(dataRow);
+  }*/
+
+// Append the table to the document
+document.body.appendChild(table);
+
+// Set the value of the "time" field
+//var hours = d.getMilliseconds();
+//document.getElementById("currentTime").innerHTML = query["currentTime"];
+</script>
