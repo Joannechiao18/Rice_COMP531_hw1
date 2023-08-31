@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="HW1">
+    <meta name="keywords" content="HTML, CSS, JavaScript">
+    <meta name="author" content="Joanne Wang">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Registration Page</title>
+
+    <!-- Main css -->
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="css/fonts/material-icon/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="css/hw1.css">
+</head>
+<body>
+
+    <div class="main">
+        <!--<form action="/action_page.php" method="get">-->
+        <form name="myForm" action="formProcessor.html" method="GET">
+            <div class="form-group">
+                <label for="currentTime"></label>
+                <input type="hidden" name="currentTime" id="currentTime"/>
+            </div>
+                
+            <div class="form-group">
+                <label for="accountName">Account name</label>
+                <input type="text" name="accountName" id="accountName" oninput="checkName();" placeholder="Account name"  
+                 required/>
+            </div>
+    
+            <div class="form-group">
+                <label for="display name">Display name</label>
+                <input type="text" name="display name" id="display name" placeholder="Display name"/>
+            </div>
+    
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" placeholder="Email" oninput="checkEmail();"required/>
+            </div>
+    
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" name="phone" placeholder="Phone" oninput="checkPhone();" required/>
+            </div>
+    
+            <div class="form-group">
+                <label for="birthday">Birth date</label>
+                <input type="date" name="birthday" id="birthday"  oninput="checkAge();" required/>
+            </div>
+    
+            <div class="form-group">
+                <label for="zipCode">Zip code</label>
+                <input type="zipCode" name="zipCode" id="zipCode" oninput="checkZip();" placeholder="Zip code" required/>
+            </div>
+    
+            <div class="form-group">
+                <label for="pass">Password</label>
+                <input type="password" name="pass" id="pass" oninput="checkPass();" placeholder="Password" required/>
+            </div>
+    
+            <div class="form-group">
+                <label for="rePass">Confirm password</label>
+                <input type="password" name="rePass" id="rePass" oninput="checkRePass();" placeholder="Confirm password" required/>
+            </div>
+    
+            <div class="form-group form-button">
+                <input type="submit" name="signup" id="signup" class="form-submit" onclick="validateForm()" value="Register"/>
+                <input type="reset" name="clear" id="clear" class="form-submit" value="Clear"/>
+            </div>
+        </form>
+        
+    </div>
+
+    <!-- JS
+    <script src="Registration.js"></script>-->
+</body>
+</html>
+
+<script type="text/javascript">
+var d = new Date();
+
+document.getElementById("currentTime").value = d.getMilliseconds()
+console.log(d.getMilliseconds());
+
+
+function checkName() {
+	var passcode_input = document.querySelector("#accountName");
+    let check=(/^[A-Za-z0-9]*$/.test(name));
+
+    if(!(/^[a-z]*$/.test(passcode_input.value[0]))){
+        passcode_input.setCustomValidity("Must start with lower case.")
+    }
+    else if(!(/^[a-z][A-Za-z0-9]*$/.test(passcode_input.value))){
+        passcode_input.setCustomValidity("Account name can only contain numbers and characters.");
+    }
+    else {
+		passcode_input.setCustomValidity(""); // be sure to leave this empty!
+	}
+}
+
+function checkEmail() {
+	var passcode_input = document.querySelector("#email");
+	
+	if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(passcode_input.value))) {
+		passcode_input.setCustomValidity("Enter email in this format: a@b.co.");
+	} else {
+		passcode_input.setCustomValidity(""); // be sure to leave this empty!
+	}
+}
+
+function checkPhone() {
+	var passcode_input = document.querySelector("#phone");
+	
+	if (!(/^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/.test(passcode_input.value))) {
+		passcode_input.setCustomValidity("Enter phone in this format: 346-628-7744.");
+	} else {
+		passcode_input.setCustomValidity(""); // be sure to leave this empty!
+	}
+}
+
+function checkAge() {
+	var bday_input = document.querySelector("#birthday");
+    var today = new Date();
+        birthDate=new Date(bday_input.value);
+    
+        var y1 = today.getFullYear();
+        var y2 = birthDate.getFullYear();
+	
+	if (y1-y2<18) {
+		bday_input.setCustomValidity("Age must be older than 18.");
+	} else {
+		bday_input.setCustomValidity(""); // be sure to leave this empty!
+	}
+}
+
+function checkZip() {
+	var passcode_input = document.querySelector("#zipCode");
+	
+	if (!(/^\d{5}(-\d{4})?$/.test(passcode_input.value))) {
+		passcode_input.setCustomValidity("Enter zip in this format: 77030.");
+	} else {
+		passcode_input.setCustomValidity(""); // be sure to leave this empty!
+	}
+}
+
+function checkPass() {
+	var passcode_input = document.querySelector("#pass");
+	
+	if (passcode_input.value==='') {
+		passcode_input.setCustomValidity("Enter password.");
+	} else {
+		passcode_input.setCustomValidity(""); // be sure to leave this empty!
+	}
+}
+
+function checkRePass() {
+	var passcode_input = document.querySelector("#pass");
+    var re_passcode_input = document.querySelector("#rePass");
+	
+	if (passcode_input.value!=re_passcode_input.value) {
+		re_passcode_input.setCustomValidity("Password mistmatch.");
+	} else {
+		re_passcode_input.setCustomValidity(""); // be sure to leave this empty!
+	}
+}
+
+function validateForm(){
+
+    function validateAccountName(name){
+        return (/^[A-Za-z0-9]*$/.test(name));
+    }
+
+    function validateEmail(mail) {
+        return (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail));
+    }
+
+    function validatePhone(phone){
+        return (/^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/.test(phone));
+    }
+
+    function validateZip(zip_code){
+        return /^\d{5}(-\d{4})?$/.test(zip_code);
+    }
+
+    function validateAge(birthDate) {
+        var today = new Date();
+        birthDate=new Date(birthDate);
+    
+        var y1 = today.getFullYear();
+        var y2 = birthDate.getFullYear();
+
+        if(y1-y2>=18){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    function validateRePass(pass1, pass2){
+        return pass1==pass2;
+    }
+
+    //check account name
+    var name_input=document.getElementById("accountName"); 
+    var check_name=validateAccountName(name_input.value);
+
+    //check mail
+    var mail_input=document.getElementById("email"); 
+    var check_mail=validateEmail(mail_input.value);
+    
+
+    //check phone
+    var phone_input = document.getElementById("myform_phone");
+    var check_phone=validatePhone(phone_input.value); 
+    
+
+    //check birthday
+    var bday_input = document.getElementById("birthday");
+    var check_birthday=validateAge(bday_input.value); 
+
+
+    //check zip
+    var zip_input = document.getElementById("zipCode");
+    var check_zip=validateZip(zip_input.value); 
+
+    //check pass
+    var pass_input = document.getElementById("pass");
+
+
+    //check repass
+    var rePass_input = document.getElementById("rePass");
+    var checkRePass=validateRePass(pass_input.value, rePass_input.value); 
+
+    if(check_name && check_mail && check_phone && check_birthday && check_zip && check_pass && checkRePass){
+        return true;
+    }
+    else{
+        alert("Please enter your information in valid format.")
+        return false;
+    }
+}
+
+
+
+
+
+
+</script>
